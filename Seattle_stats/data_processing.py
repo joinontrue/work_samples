@@ -50,61 +50,116 @@
 subset_size=10000
 data_dir='./Desktop/career/0_work_samples/Seattle_stats/data/'
 #%%= = = = = = = = = = = =[ READ IN CSV AS PANDAS DATA TABLE ]= = = = = = = = =
-Seattle_Police_Department_Police_Report_Incident=pd.read_csv(data_dir+
-    'Seattle_Police_Department_Police_Report_Incident.csv')
-Seattle_Police_Department_911_Incident_Response=pd.read_csv(data_dir+
-    'Seattle_Police_Department_911_Incident_Response.csv')
-Call_Data=pd.read_csv(data_dir+'Call_Data.csv')
-Crime_Data=pd.read_csv(data_dir+'Crime_Data.csv')
-Seattle_Crime_Stats_by_Police_Precinct_2008_to_Present=pd.read_csv(data_dir+
-    'Seattle_Crime_Stats_by_Police_Precinct_2008-Present.csv')
-Road_Weather_Information_Stations=pd.read_csv(data_dir+
-    'Road_Weather_Information_Stations.csv')
-
+#Seattle_Police_Department_Police_Report_Incident=pd.read_csv(data_dir+
+#    'Seattle_Police_Department_Police_Report_Incident.csv',
+#    dtype={
+#        
+#  'RMS CDW ID':str,
+#  'General Offense Number':str,
+#  'Offense Code':str,#np.int32,
+#  'Offense Code Extension':np.float64,
+#  'Offense Type':str,
+#  'Summary Offense Code':str,#np.int32,
+#  'Summarized Offense Description':str,
+#  'Date Reported':str,#dt.datetime,
+#  'Occurred Date or Date Range Start':str,#:dt.datetime,
+#  'Occurred Date Range End':str,#datetime,
+#  'Hundred Block Location':str,
+#  'District/Sector':str,
+#  'Zone/Beat':str,
+#  'Census Tract 2000':np.float64,
+#  'Longitude':np.float64,
+#  'Latitude':np.float64,
+#  'Location':str,
+#  'Month':np.int32,
+#  'Year':np.int32      
+#        
+#        }
+#    
+##    ,nrows=100
+#    ,infer_datetime_format=True
+#    
+#    
+#    )
+#
+##%%
+#
+#Crime_Data=pd.read_csv(data_dir+'Crime_Data.csv',
+#  dtype={
+#      'Occurred Time':str,
+#      'Reported Time':str
+#          },  
+#  infer_datetime_format=True
+#  )
+#
+##%%
+#Seattle_Police_Department_Police_Report_Incident['Year'][1:100]
+##%%
+#Seattle_Police_Department_Police_Report_Incident.dtypes
+#
+##%%
+#Seattle_Police_Department_911_Incident_Response=pd.read_csv(data_dir+
+#    'Seattle_Police_Department_911_Incident_Response.csv').astype(dtype={'Event Clearance Date':dt.datetime})
+##%%
+#Seattle_Police_Department_911_Incident_Response.dtypes  
+#
+#
+#
+#
+#
+##%%
+#Incident_Response_sub=Seattle_Police_Department_911_Incident_Response[1:100].astype(dtype={'Event Clearance Date':dt.datetime})
+##%%
+#Incident_Response_sub.dtypes
+##%%
+#Incident_Response_sub.loc[:,'Event Clearance Date']
+#
+##%%
+#Incident_Response_sub_2=Incident_Response_sub.assign(m=pd.to_datetime(Incident_Response_sub['Event Clearance Date']))
+##%%
+#Incident_Response_sub_2.columns
+#Incident_Response_sub_2.dtypes
+##%%
+#
+#dt_dt.time(Incident_Response_sub_2.m)
+#
+#Incident_Response_sub_3=Incident_Response_sub_2.assign(d=day(m))
+#
+##%%
+#Seattle_Police_Department_911_Incident_Response.columns
+##%%
+#Seattle_Police_Department_911_Incident_Response.astype(dtype={'Event Clearance Date':dt.datetime})
+#
+#
+##%%
+#dt_dt.strptime(
+#    Seattle_Police_Department_911_Incident_Response.loc[:,'Event Clearance Date'].iloc[1:10]
+#    ,'%b %d %Y %I:%M:%S:000%p'
+#    )
+#
+##%%
+#dt_dt.strptime(calls2.loc[:,'ta'].iloc[i],'%b %d %Y %I:%M:%S:000%p')
+#Seattle_Police_Department_911_Incident_Response.loc[:,'Event Clearance Date'][1:10]
+#%%
+#Call_Data=pd.read_csv(data_dir+'Call_Data.csv')
+#%%
+Crime_Data=pd.read_csv(data_dir+'Crime_Data.csv',
+ dtype={
+     'Report Number':str,
+     'Occurred Date':str,
+     'Occurred Time':str,
+     'Reported Date':str,
+     'Reported Time':str,
+     'Crime Subcategory':str,
+     'Primary Offense Description':str,
+     'Precinct':str,
+     'Sector':str,
+     'Beat':str,
+     'Neighborhood':str
+     }
+ )
 #%% = = = = = = = = = = = = = = =[ COLUMNS ]= = = = = = = = = = = = = = = = = =
-print(Seattle_Police_Department_Police_Report_Incident.columns);
-#  'RMS CDW ID'
-#  'General Offense Number'
-#  'Offense Code'
-#  'Offense Code Extension'
-#  'Offense Type'
-#  'Summary Offense Code'
-#  'Summarized Offense Description'
-#  'Date Reported'
-#  'Occurred Date or Date Range Start'
-#  'Occurred Date Range End'
-#  'Hundred Block Location'
-#  'District/Sector'
-#  'Zone/Beat'
-#  'Census Tract 2000'
-#  'Longitude'
-#  'Latitude'
-#  'Location'
-#  'Month'
-#  'Year'
-
-print(Seattle_Police_Department_911_Incident_Response.columns);
-#  'CAD CDW ID'
-#  'CAD Event Number'
-#  'General Offense Number'
-#  'Event Clearance Code'
-#  'Event Clearance Description'
-#  'Event Clearance SubGroup'
-#  'Event Clearance Group'
-#  'Event Clearance Date'
-#  'Hundred Block Location'
-#  'District/Sector'
-#  'Zone/Beat'
-#  'Census Tract'
-#  'Longitude'
-#  'Latitude'
-#  'Incident Location'
-#  'Initial Type Description'
-#  'Initial Type Subgroup'
-#  'Initial Type Group'
-#  'At Scene Time'
-
-print(Call_Data.columns);
+#print(Call_Data.columns);
 #  'CAD Event Number'
 #  'Event Clearance Description'
 #  'Call Type'
@@ -129,55 +184,40 @@ print(Crime_Data.columns);
 #  'Sector'
 #  'Beat'
 #  'Neighborhood'
-
-print(Seattle_Crime_Stats_by_Police_Precinct_2008_to_Present.columns);
-#  'Police Beat'
-#  'CRIME_TYPE'
-#  'CRIME_DESCRIPTION'
-#  'STAT_VALUE'
-#  'REPORT_DATE'
-#  'Sector'
-#  'Precinct'
-#  'Row_Value_ID'
-
-print(Road_Weather_Information_Stations.columns);
-#  'StationName'
-#  'StationLocation'
-#  'DateTime'
-#  'RecordId'
-#  'RoadSurfaceTemperature'
-#  'AirTemperature'
-
 #%% = = = = = = = = = = = = = = =[ ROW COUNTS ]= = = = = = = = = = = = = = = = 
-print('len(Seattle_Police_Department_Police_Report_Incident):',
-        len(Seattle_Police_Department_Police_Report_Incident),'\n',
-      'len(Seattle_Police_Department_911_Incident_Response):',
-        len(Seattle_Police_Department_911_Incident_Response),'\n',      
-      'len(Call_Data):',len(Call_Data),'\n',
-      'len(Crime_Data):',len(Crime_Data),'\n',            
-      'len(Seattle_Crime_Stats_by_Police_Precinct_2008_to_Present):',
-        len(Seattle_Crime_Stats_by_Police_Precinct_2008_to_Present),'\n',      
-      'len(Seattle_Real_Time_Fire_911_Calls):',
-        len(Seattle_Real_Time_Fire_911_Calls),'\n',            
-      'len(Road_Weather_Information_Stations):',
-        len(Road_Weather_Information_Stations),'\n',
-      'len(Traffic_Flow_Map_Volumes):',len(Traffic_Flow_Map_Volumes),sep='');
+print('len(Call_Data):',len(Call_Data),'\n',
+      'len(Crime_Data):',len(Crime_Data),'\n',sep='');
 #%% = = = = = = = = = = = = = = =[ SUBSETS ]= = = = = = = = = = = = = = = = = =
 #Adding [count] for safe/simple counting.
-Report_Incident_sub= \
-  Seattle_Police_Department_Police_Report_Incident[0:subset_size].assign(
-  count=1);
-Incident_Response_sub= \
-  Seattle_Police_Department_911_Incident_Response[0:subset_size].assign(
-  count=1);
+subset_size=len(Crime_Data);
 Call_Data_sub=Call_Data[0:subset_size].assign(count=1);
 Crime_Data_sub=Crime_Data[0:subset_size].assign(count=1);
-Crime_Stats_by_Precinct_sub= \
-  Seattle_Crime_Stats_by_Police_Precinct_2008_to_Present[0:subset_size].assign(
-  count=1);
-Road_Weather_Information_Stations_sub= \
-  Road_Weather_Information_Stations[0:subset_size].assign(count=1);
+#%% = = = = = = = = = = = = = = =[ TIDYING FORMATS ]= = = = = = = = = = = = = =
+Crime_Data_sub_2=Crime_Data[0:subset_size].assign(
+    Occurred_Date=pd.to_datetime(Crime_Data_sub['Occurred Date'],format='%m/%d/%Y'),
+    Occurred_Time=pd.to_datetime(Crime_Data_sub['Occurred Time'].str.pad(width=4,side='left',fillchar='0'),format='%H%M'),
+    Reported_Date=pd.to_datetime(Crime_Data_sub['Reported Date'],format='%m/%d/%Y'),
+    Reported_Time=pd.to_datetime(Crime_Data_sub['Reported Time'].str.pad(width=4,side='left',fillchar='0'),format='%H%M')
+)
+#%% = = = = = = = = = = = = = = =[ MAKE ROOM FOR DATETIMES ]= = = = = = = = = = 
+Crime_Data_sub_3=Crime_Data_sub_2.assign(
+    Occurred_Datetime='',
+    Reported_Datetime='')                
+#%% = = = = = = = = = = = = = = =[ ADD DATES AND TIMES ]= = = = = = = = = = = = 
+for i in range(0,len(Crime_Data_sub_2)):
+  if np.mod(i,1000)==0:
+    print(i)
+  Crime_Data_sub_3.loc[:,'Occurred_Datetime'].iat[i]=dt_dt.combine(Crime_Data_sub_2.loc[:,'Occurred_Date'].iat[i].date(),
+                  Crime_Data_sub_2.loc[:,'Occurred_Time'].iat[i].time())    
+  Crime_Data_sub_3.loc[:,'Reported_Datetime'].iat[i]=dt_dt.combine(Crime_Data_sub_2.loc[:,'Reported_Date'].iat[i].date(),
+                  Crime_Data_sub_2.loc[:,'Reported_Time'].iat[i].time())    
+#%%
 
+##%%    
+#Crime_Data_sub_2.columns
+#Crime_Data_sub_2.dtypes
+#Crime_Data_sub.dtypes
+#%%
 #a=pd.DataFrame(Report_Incident_sub.groupby(['RMS CDW ID'])['count'].sum())
 #a[a['count']>1]
 #Report_Incident_sub[pd.isna(Report_Incident_sub['RMS CDW ID'])]
@@ -188,45 +228,37 @@ Road_Weather_Information_Stations_sub= \
 #    on=['CAD Event Number','CAD Event Number'],
 #    suffixes=('__cd','__911'),
 #    validate='many_to_one')
-#%%  
-print(Report_Incident_sub.head(),
-  Incident_Response_sub.head(),
-  Call_Data_sub.head(),
-  Crime_Data.head(),
-  Crime_Stats_by_Precinct_sub.head(),
-  Road_Weather_Information_Stations_sub.head()
-  )
 #%%= = = = = = = = = = =[ RENAME, TAKE SUBSET FOR DEV ]= = = = = = = = = = = =
-calls=Call_Data.rename(index=str, columns={
-    'CAD Event Number':'CAD_event_number',        
-    #- - - - - - - - -[ WHERE ]- - - - - - - - - - - - - - - - - - - - - - - -
-    'Precinct':'precinct',
-    'Sector':'sector',
-    'Beat':'beat',        
-    #- - - - - - - - -[ WHEN ]- - - - - - - - - - - - - - - - - - - - - - - - -
-    'Original Time Queued':'tq',
-    'Arrived Time':'ta',                
-    #- - - - - - - - -[ HOW ]- - - - - - - - - - - - - - - - - - - - - - - - -
-    'Call Type':'channel',        
-    'Priority':'priority',        
-    #- - - - - - - - -[ WHAT ]- - - - - - - - - - - - - - - - - - - - - - - - -
-    'Initial Call Type':'description_i',
-    'Final Call Type':'description_f',
-    'Event Clearance Description':'resolution'
-  })[0:subset_size]
+#call_data_sub=Call_Data[1:100].rename(index=str, columns={
+#    'CAD Event Number':'CAD_event_number',        
+#    #- - - - - - - - -[ WHERE ]- - - - - - - - - - - - - - - - - - - - - - - -
+#    'Precinct':'precinct',
+#    'Sector':'sector',
+#    'Beat':'beat',        
+#    #- - - - - - - - -[ WHEN ]- - - - - - - - - - - - - - - - - - - - - - - - -
+#    'Original Time Queued':'tq',
+#    'Arrived Time':'ta',                
+#    #- - - - - - - - -[ HOW ]- - - - - - - - - - - - - - - - - - - - - - - - -
+#    'Call Type':'channel',        
+#    'Priority':'priority',        
+#    #- - - - - - - - -[ WHAT ]- - - - - - - - - - - - - - - - - - - - - - - - -
+#    'Initial Call Type':'description_i',
+#    'Final Call Type':'description_f',
+#    'Event Clearance Description':'resolution'
+#  })[0:subset_size].assign(count=1);
 #print(calls.columns)
 #print(len(calls))
 #%%= = = = = = = = = = = = =[ REFORMAT TIME FIELDS ]= = = = = = = = = = = = = =
-calls2=calls.assign(
-    tq2=dt.datetime(1700,1,1),
-    ta2=dt.datetime(1700,1,1)
-  );
-for i in range(0,len(calls2)):
-  if np.mod(i+1,1000)==0:
-    print(i+1)
-  calls2.loc[:,'ta2'].iloc[i]= \
-    dt_dt.strptime(calls2.loc[:,'ta'].iloc[i],'%b %d %Y %I:%M:%S:000%p')
-  calls2.loc[:,'tq2'].iloc[i]= \
-    dt_dt.strptime(calls2.loc[:,'tq'].iloc[i],'%m/%d/%Y %I:%M:%S %p')
+#calls2=calls.assign(
+#    tq2=dt.datetime(1700,1,1),
+#    ta2=dt.datetime(1700,1,1)
+#  );
+#for i in range(0,len(calls2)):
+#  if np.mod(i+1,1000)==0:
+#    print(i+1)
+#  calls2.loc[:,'ta2'].iloc[i]= \
+#    dt_dt.strptime(calls2.loc[:,'ta'].iloc[i],'%b %d %Y %I:%M:%S:000%p')
+#  calls2.loc[:,'tq2'].iloc[i]= \
+#    dt_dt.strptime(calls2.loc[:,'tq'].iloc[i],'%m/%d/%Y %I:%M:%S %p')
 #print(calls2.loc[:,['ta2','tq2']].iloc[1:1000])    
 #%#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
