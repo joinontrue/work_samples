@@ -99,7 +99,7 @@ dists_1<-ggplot(df%>%filter(is.element(crime_subcategory_2,c(
   'rape',
   'robbery'
   ))))+
-stat_bin(aes(x=log_dt,y=stat(density)),
+stat_bin(aes(x=log_dt,y=stat(bin_width*density)),
   color="black",
   fill="light green",
   breaks=c(zerosub,seq(log_min,log_max,bin_width))
@@ -109,9 +109,9 @@ scale_x_continuous(
            as.integer(seq(log_min,log_max,bin_width))+(bin_width/2)),
   labels=c('-Inf',as.integer(seq(log_min,log_max,bin_width)))
   )+
-scale_y_discrete()+
 labs(title="time from crime to reporting",
-  x=expression('log'[10]*'(days)'))+
+  x=expression('log'[10]*'(days)'),
+  y='relative frequency')+
 facet_grid(crime_subcategory_2~.)
 
 jpeg(paste0(dir_path,'output\\dists_1.jpg'))
@@ -125,7 +125,7 @@ dists_2<-ggplot(df%>%filter(is.element(crime_subcategory_2,c(
   'arson',
   'burglary'
 ))))+
-  stat_bin(aes(x=log_dt,y=stat(density)),
+  stat_bin(aes(x=log_dt,y=stat(bin_width*density)),
            color="black",
            fill="light green",
            breaks=c(zerosub,seq(log_min,log_max,bin_width))
@@ -135,9 +135,9 @@ dists_2<-ggplot(df%>%filter(is.element(crime_subcategory_2,c(
              as.integer(seq(log_min,log_max,bin_width))+(bin_width/2)),
     labels=c('-Inf',as.integer(seq(log_min,log_max,bin_width)))
   )+
-  scale_y_discrete()+
   labs(title="time from crime to reporting",
-    x=expression('log'[10]*'(days)'))+
+    x=expression('log'[10]*'(days)'),
+    y='relative frequency')+
   facet_grid(crime_subcategory_2~.)
 
 jpeg(paste0(dir_path,'output\\dists_2.jpg'))
@@ -152,7 +152,7 @@ dists_3<-ggplot(df%>%filter(is.element(crime_subcategory_2,c(
   'prost.',
   '(other)'
 ))))+
-  stat_bin(aes(x=log_dt,y=stat(density)),
+  stat_bin(aes(x=log_dt,y=stat(bin_width*density)),
            color="black",
            fill="light green",
            breaks=c(zerosub,seq(log_min,log_max,bin_width))
@@ -162,9 +162,9 @@ dists_3<-ggplot(df%>%filter(is.element(crime_subcategory_2,c(
              as.integer(seq(log_min,log_max,bin_width))+(bin_width/2)),
     labels=c('-Inf',as.integer(seq(log_min,log_max,bin_width)))
   )+
-  scale_y_discrete()+
   labs(title="time from crime to reporting",
-    x=expression('log'[10]*'(days)'))+
+    x=expression('log'[10]*'(days)'),
+    y='relative frequency')+
   facet_grid(crime_subcategory_2~.)
 
 jpeg(paste0(dir_path,'output\\dists_3.jpg'))
